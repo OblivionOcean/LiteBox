@@ -8,7 +8,20 @@ class Litebox {
     }
 
     initEvents() {
-        document.addEventListener('DOMNodeInserted', this.whenDomChanged.bind(this));
+        new MutationObserver((mutationsList) => {
+            for (const mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    // 处理新增的节点
+                    mutation.addedNodes.forEach(node => {
+                        // 调用原来的处理函数，传递模拟的事件对象
+                        this.whenDomChanged.bind({ target: node })
+                    });
+                }
+            }
+        }).observe(document.body, {
+            childList: true,
+            subtree: true
+        });
         document.addEventListener('DOMAttrModified', this.whenDomChanged.bind(this));
         this.total = document.querySelectorAll('img').length - 1; // 减去灯箱图片本身
         this.currentIndex = 1; // 从第一个图片开始
