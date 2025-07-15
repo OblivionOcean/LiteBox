@@ -144,4 +144,4 @@ class Litebox {
 
 (() => {
     document.addEventListener('DOMContentLoaded', () => { new Lightbox() });
-});
+})();
