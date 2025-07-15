@@ -9,7 +9,7 @@ class Litebox {
 
     initEvents() {
         document.addEventListener('DOMNodeInserted', this.whenDomChanged.bind(this));
-        document.addEventListener('DOMNodeChanged', this.whenDomChanged.bind(this));
+        document.addEventListener('DOMAttrModified', this.whenDomChanged.bind(this));
         this.total = document.querySelectorAll('img').length - 1; // 减去灯箱图片本身
         this.currentIndex = 1; // 从第一个图片开始
         Array.from(document.getElementsByTagName("img")).forEach((img, index) => {
