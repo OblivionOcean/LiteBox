@@ -70,8 +70,8 @@
             </div>
         </div>
     </main>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@oblivionocean/litebox/dist/index.css">
-    <script src="https://cdn.jsdelivr.net/npm/@oblivionocean/litebox/dist/index.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@oblivionocean@latest/litebox/dist/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/@oblivionocean/litebox@latest/dist/index.min.js"></script>
 </body>
 
 </html>
@@ -80,8 +80,8 @@
 ### 快速集成
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@oblivionocean/litebox/dist/index.css">
-<script src="https://cdn.jsdelivr.net/npm/@oblivionocean/litebox/dist/index.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@oblivionocean/litebox@latest/dist/index.css">
+<script src="https://cdn.jsdelivr.net/npm/@oblivionocean/litebox@latest/dist/index.min.js"></script>
 ```
 
 ### img 标签属性
