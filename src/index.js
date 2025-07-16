@@ -140,6 +140,7 @@ class Litebox {
         this.range.addEventListener('click', this.clickHandler);
     }
 }
-(() => {
+
+document.addEventListener("DOMContentLoaded", () => {
     liteBox = window.liteBox = new Litebox()
-})();
+});
