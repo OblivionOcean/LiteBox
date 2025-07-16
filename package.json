@@ -1,6 +1,6 @@
 {
   "name": "@oblivionocean/litebox",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Lightweight picture lightbox component",
   "homepage": "https://github.com/OblivionOcean/LiteBox#readme",
   "keywords": [
@@ -20,7 +20,7 @@
   "type": "commonjs",
   "main": "dist/index.min.js",
   "scripts": {
-    "build": "uglifyjs src/index.js --source-map -c -m --timings --mangle-props reserved=keep_quoted -o dist/index.min.js && cp src/index.js dist/index.js && cp src/index.css dist/index.css",
+    "build": "uglifyjs src/index.js --source-map -c -m --timings --mangle-props reserved=[setRange,liteBox],keep_quoted -o dist/index.min.js && cp src/index.js dist/index.js && cp src/index.css dist/index.css",
     "publish": "npm run build"
   },
   "devDependencies": {
