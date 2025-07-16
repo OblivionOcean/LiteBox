@@ -8,26 +8,9 @@ class Litebox {
     }
 
     initEvents() {
-        new MutationObserver((mutationsList) => {
-            for (const mutation of mutationsList) {
-                if (mutation.type === 'childList') {
-                    // 处理新增的节点
-                    mutation.addedNodes.forEach(node => {
-                        // 调用原来的处理函数，传递模拟的事件对象
-                        this.whenDomChanged.bind({ target: node })
-                    });
-                }
-            }
-        }).observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-        document.addEventListener('DOMAttrModified', this.whenDomChanged.bind(this));
         this.total = document.querySelectorAll('img').length - 1; // 减去灯箱图片本身
         this.currentIndex = 1; // 从第一个图片开始
-        Array.from(document.getElementsByTagName("img")).forEach((img, index) => {
-            img.addEventListener('click', e => this.click.bind(this)(e, index + 1));
-        });
+        document.addEventListener('click', this.click.bind(this));
         this.getElem("#close-btn").addEventListener('click', this.close.bind(this));
         this.getElem("#zoom-out-btn").addEventListener('click', () => this.zoom(-0.3));
         this.getElem("#zoom-in-btn").addEventListener('click', () => this.zoom(0.3));
@@ -47,13 +30,13 @@ class Litebox {
             e.preventDefault();
             switch (e.key) {
                 case 'Escape':
-                    closeLightbox();
+                    this.close();
                     break;
                 case 'ArrowLeft':
-                    navigate(-1);
+                    this.navigate(-1);
                     break;
                 case 'ArrowRight':
-                    navigate(1);
+                    this.navigate(1);
                     break;
                 case '+': case '=':
                     this.zoom(0.3);
@@ -71,20 +54,17 @@ class Litebox {
         });
     }
 
-    whenDomChanged(e) {
-        e = e.target;
-        if (e.nodeName.toUpperCase() == 'IMG' && e.className != 'lightbox-img' && e.src) {
-            e.addEventListener('click', this.click.bind(this));
+    click(e) {
+        e = e.target
+        if (e.tagName == 'IMG' && e.className != 'lightbox-img' && e.src) {
+            let allImg = document.getElementsByTagName("img")
+            this.total = allImg.length - 1; // 减去灯箱图片本身
+            this.current = Array.from(document.querySelectorAll('img')).indexOf(e) + 1;
+            if (e.classList.contains('lightbox-image')) return; // 防止灯箱图片被点击
+            if (e.preventDefault) e.preventDefault();
+            this.set(e.getAttribute("data-src") || e.src, e.getAttribute("data-caption") || e.alt || e.title || "", e.alt || e.title || "");
+            this.show();
         }
-        this.total = document.querySelectorAll('img').length - 1;
-    }
-
-    click(e, index) {
-        this.currentIndex = index;
-        if (e.target.classList.contains('lightbox-image')) return; // 防止灯箱图片被点击
-        if (e.preventDefault) e.preventDefault();
-        this.set(e.target.getAttribute("data-src") || e.target.src, e.target.getAttribute("data-caption") || e.target.alt || e.target.title || "", e.target.alt || e.target.title || "");
-        this.show();
     }
 
     getElem(selector) {
@@ -109,6 +89,7 @@ class Litebox {
     }
 
     set(url, caption, title) {
+        this.getElem('.lightbox-image').style.opacity = '0';
         this.getElem('.lightbox-image').src = url;
         this.getElem('.lightbox-image').title = title || '';
         this.getElem('.caption').textContent = caption || '';
@@ -116,7 +97,6 @@ class Litebox {
             this.getElem('.lightbox-image').style.opacity = '1';
         };
         this.getElem('.lightbox-image').onerror = () => {
-            this.getElem('.lightbox-image').style.opacity = '0';
             this.getElem('.caption').textContent = '图片加载失败';
             this.resetLightbox();
         };
