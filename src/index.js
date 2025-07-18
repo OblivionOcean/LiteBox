@@ -142,5 +142,5 @@ class Litebox {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    liteBox = window.liteBox = new Litebox()
+    if (!dontLoadLiteBox) liteBox = window.liteBox = new Litebox()
 });
